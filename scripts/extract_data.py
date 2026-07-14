@@ -2,7 +2,8 @@ import pdfplumber
 import re
 import json
 
-pdf_path = "state_cutoffs.pdf" 
+pdf_path = "ai_cap4.pdf" 
+current_round = 4
 
 print("🧩 MAPPING CATEGORIES TO PERCENTILES...\n")
 print("-" * 50)
@@ -52,7 +53,7 @@ with pdfplumber.open(pdf_path) as pdf:
                              "seat_type": active_categories[j],
                              "closing_percentile": float(clean_percentiles[j]),
                              "year": 2025,
-                             "cap_round": 1
+                             "cap_round": current_round
                          }
                          extracted_data.append(data_point)
                      

@@ -3,12 +3,11 @@
 import { useState } from 'react';
 import { createClient } from '@supabase/supabase-js';
 import collegeDictionary from './colleges.json'; 
-// 1. IMPORT THE NEW BRANCH DECODER
 import branchDictionary from './branches.json'; 
 
 // Database Connection
-const supabaseUrl = "https://miqyijdbfwsdxwpdizcc.supabase.co"; // Keep your URL
-const supabaseAnonKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1pcXlpamRiZndzZHh3cGRpemNjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODMzMzcyNzgsImV4cCI6MjA5ODkxMzI3OH0.n2uExa8DtZbBthwxd8cDtlLIEZISWetYlnqhZ71uOTE"; // Keep your Key
+const supabaseUrl = "https://miqyijdbfwsdxwpdizcc.supabase.co"; // Your URL
+const supabaseAnonKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1pcXlpamRiZndzZHh3cGRpemNjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODMzMzcyNzgsImV4cCI6MjA5ODkxMzI3OH0.n2uExa8DtZbBthwxd8cDtlLIEZISWetYlnqhZ71uOTE"; // Put your key back in!
 const supabase = createClient(supabaseUrl, supabaseAnonKey);
 
 interface CutoffData {
@@ -25,17 +24,19 @@ export default function Home() {
   const [suggestions, setSuggestions] = useState<{code: string, name: string}[]>([]);
   const [activeCollegeCode, setActiveCollegeCode] = useState('');
   
+  const [selectedRound, setSelectedRound] = useState<number>(1);
+  // 1. NEW STATE: Track MH vs AI Quota
+  const [selectedQuota, setSelectedQuota] = useState<string>('MH'); 
+  
   const [results, setResults] = useState<CutoffData[]>([]);
   const [loading, setLoading] = useState(false);
 
   const handleType = (text: string) => {
     setSearchInput(text);
-    
     if (text.length > 2) {
       const matches = Object.entries(collegeDictionary)
         .filter(([code, name]) => name.toLowerCase().includes(text.toLowerCase()))
         .map(([code, name]) => ({ code, name }));
-      
       setSuggestions(matches.slice(0, 5));
     } else {
       setSuggestions([]);
@@ -48,16 +49,30 @@ export default function Home() {
     setSuggestions([]); 
   };
 
+  // 2. UPGRADED QUERY BUILDER
   const handleSearch = async () => {
     if (!activeCollegeCode) return;
     
     setLoading(true);
     
-    const { data, error } = await supabase
+    // Start building the query with the base filters
+    let query = supabase
       .from('raw_cutoffs')
       .select('*')
       .eq('college_code', activeCollegeCode)
+      .eq('cap_round', selectedRound)
       .order('closing_percentile', { ascending: false });
+
+    // Conditionally apply the Quota filter
+    if (selectedQuota === 'AI') {
+      // If AI, only show rows where seat_type is exactly 'AI'
+      query = query.eq('seat_type', 'AI');
+    } else {
+      // If MH, hide the AI seats to keep the list clean
+      query = query.neq('seat_type', 'AI');
+    }
+
+    const { data, error } = await query;
 
     if (error) {
       console.error("Error fetching data:", error);
@@ -99,6 +114,28 @@ export default function Home() {
           )}
         </div>
 
+        {/* 3. NEW QUOTA SELECT MENU */}
+        <select 
+          value={selectedQuota}
+          onChange={(e) => setSelectedQuota(e.target.value)}
+          className="border border-blue-600 bg-blue-900/30 text-white p-2 rounded cursor-pointer font-semibold outline-none"
+        >
+          <option value="MH">State Seats (CET)</option>
+          <option value="AI">All India (JEE)</option>
+        </select>
+
+        {/* EXISTING ROUND SELECT MENU */}
+        <select 
+          value={selectedRound}
+          onChange={(e) => setSelectedRound(Number(e.target.value))}
+          className="border border-gray-600 bg-gray-800 text-white p-2 rounded cursor-pointer font-semibold outline-none"
+        >
+          <option value="1">CAP Round 1</option>
+          <option value="2">CAP Round 2</option>
+          <option value="3">CAP Round 3</option>
+          <option value="4">CAP Round 4</option>
+        </select>
+
         <button 
           onClick={handleSearch}
           disabled={loading || !activeCollegeCode}
@@ -114,8 +151,6 @@ export default function Home() {
         )}
         
         {results.map((row, index) => {
-          // 2. THE DECODER IN ACTION
-          // We look up the raw code in our dictionary. If it fails for any reason, we fallback to showing the raw code.
           const branchName = (branchDictionary as Record<string, string>)[row.branch_code] || row.branch_code;
 
           return (
