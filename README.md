@@ -1,36 +1,24 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Freshie Guide
+
+A blazing-fast, Next.js-powered search engine designed to help engineering students seamlessly search and filter Maharashtra Engineering College Admission Cutoffs (MHT-CET & JEE Main).
+
+## Key Features
+
+* **Smart Search:** Instantly find colleges by name or DTE institute code.
+* **Multi-Round Support:** View and compare historical cutoffs across CAP Rounds 1 through 4.
+* **Quota Filtering:** Seamlessly toggle between State Seats (MHT-CET) and All India Seats (JEE Main).
+* **Dynamic Categories:** Client-side filtering for specific reservation categories (GOPENS, TFWS, LOPENS, OBC, etc.) without re-fetching data.
+* **Premium UI:** A sleek, fully responsive dark-mode interface built with Tailwind CSS.
+
+## Tech Stack
+
+* **Frontend:** Next.js (App Router), React, TypeScript, Tailwind CSS
+* **Backend:** Supabase (PostgreSQL)
+* **Data Pipeline:** Python (PDFPlumber, Regex) for extracting, cleaning, and migrating complex PDF data into a relational database.
 
 ## Getting Started
 
-First, run the development server:
+First, clone the repository and install the dependencies:
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
-
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+npm install
