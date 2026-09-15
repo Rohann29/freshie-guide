@@ -205,42 +205,57 @@ export default function Home() {
   };
 
   return (
-    <div className="min-h-screen bg-black text-white flex flex-col font-sans selection:bg-zinc-800 selection:text-white">
-      {/* Top Navbar */}
-      <header className="sticky top-0 z-40 bg-black border-b border-zinc-900 px-4 py-3">
+    <div className="min-h-screen bg-[#f5f5f7] text-[#1d1d1f] flex flex-col font-sans selection:bg-[#0071e3]/20 selection:text-[#0071e3]">
+      {/* Top Navbar - Apple Style Translucent */}
+      <header className="sticky top-0 z-40 bg-white/70 backdrop-blur-xl border-b border-gray-200/50 px-4 py-3">
         <div className="max-w-7xl mx-auto flex items-center justify-between">
           <div className="flex items-center gap-4">
-            <div className="flex items-center gap-3">
-              <div className="w-4 h-4 bg-white" />
-              <span className="font-bold text-sm tracking-tight text-white">
-                Freshie Guide
+            <div className="flex items-center gap-2">
+              <svg className="w-5 h-5 text-[#1d1d1f]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M22 10v6M2 10l10-5 10 5-10 5z" />
+                <path d="M6 12v5c3 3 9 3 12 0v-5" />
+              </svg>
+              <span className="font-semibold text-[15px] tracking-tight text-[#1d1d1f]">
+                FreshieGuide
               </span>
-              <span className="font-mono text-[10px] uppercase tracking-wider px-1.5 py-0.5 bg-zinc-900 text-zinc-400 border border-zinc-800">
-                AY 2025-26
+              <span className="text-[10px] font-medium uppercase tracking-widest px-2 py-0.5 bg-gray-100 text-gray-500 rounded-full ml-1">
+                25-26
               </span>
             </div>
           </div>
-          <div className="flex items-center gap-3 text-xs">
-            <div className="flex items-center gap-2 px-2 py-1 bg-zinc-950 border border-zinc-900 text-zinc-500 font-mono text-[10px]">
-              <span className="w-1.5 h-1.5 bg-zinc-400 rounded-none" />
-              <span>DB: ONLINE</span>
+          <div className="flex items-center gap-3">
+            <div className="flex items-center gap-2 px-3 py-1.5 bg-gray-100/80 rounded-full text-gray-500 text-[11px] font-medium">
+              <span className="w-2 h-2 bg-green-500 rounded-full" />
+              <span>System Online</span>
             </div>
           </div>
         </div>
       </header>
 
       {/* Main Container */}
-      <main className="flex-1 max-w-7xl w-full mx-auto px-4 py-8 z-10 flex flex-col gap-8">
+      <main className="flex-1 max-w-5xl w-full mx-auto px-4 sm:px-6 py-10 z-10 flex flex-col gap-10">
         
+        {/* Header Text */}
+        <div className="text-center max-w-2xl mx-auto mt-4">
+          <h1 className="text-4xl sm:text-5xl font-semibold tracking-tight text-[#1d1d1f] mb-4">
+            Find your institute.
+          </h1>
+          <p className="text-[#86868b] text-lg sm:text-xl font-medium tracking-tight">
+            Search closing percentiles across all Maharashtra Engineering Colleges.
+          </p>
+        </div>
+
         {/* Search & Filter Control Hub */}
-        <div className="border border-zinc-900 bg-zinc-950/50 p-5">
-          <div className="grid grid-cols-1 md:grid-cols-12 gap-5 items-end">
+        <div className="bg-white rounded-[32px] p-6 sm:p-8 shadow-[0_8px_30px_rgb(0,0,0,0.04)]">
+          <div className="flex flex-col gap-6">
+            
             {/* Main Search Input */}
-            <div className="md:col-span-4 relative" ref={searchContainerRef}>
-              <label className="block text-[10px] font-mono uppercase tracking-wider text-zinc-500 mb-2">
-                Institute Search
-              </label>
-              <div className="relative">
+            <div className="relative" ref={searchContainerRef}>
+              <div className="relative flex items-center">
+                <svg className="absolute left-4 w-5 h-5 text-gray-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <circle cx="11" cy="11" r="8" />
+                  <line x1="21" y1="21" x2="16.65" y2="16.65" />
+                </svg>
                 <input
                   type="text"
                   value={searchInput}
@@ -254,8 +269,8 @@ export default function Home() {
                       }
                     }
                   }}
-                  placeholder="Name or DTE Code..."
-                  className="w-full bg-black border border-zinc-800 text-zinc-200 placeholder-zinc-600 text-sm px-3 py-2 outline-none focus:border-zinc-500 transition-none"
+                  placeholder="Search by institute name or DTE code..."
+                  className="w-full bg-[#f5f5f7] text-[#1d1d1f] placeholder-gray-500 text-[17px] pl-12 pr-12 py-4 rounded-2xl outline-none focus:ring-4 focus:ring-[#0071e3]/20 transition-all border-none"
                 />
                 {searchInput && (
                   <button
@@ -265,26 +280,29 @@ export default function Home() {
                       setActiveCollegeName('');
                       setSuggestions([]);
                     }}
-                    className="absolute right-2 top-1/2 -translate-y-1/2 text-zinc-500 hover:text-white bg-black px-1"
+                    className="absolute right-4 text-gray-400 hover:text-gray-600 bg-gray-200/50 hover:bg-gray-200 rounded-full p-1 transition-colors cursor-pointer"
                   >
-                    ✕
+                    <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                      <line x1="18" y1="6" x2="6" y2="18" />
+                      <line x1="6" y1="6" x2="18" y2="18" />
+                    </svg>
                   </button>
                 )}
               </div>
 
               {/* Auto-suggest Dropdown */}
               {suggestions.length > 0 && (
-                <div className="absolute left-0 right-0 top-full mt-1 bg-black border border-zinc-800 z-50 max-h-60 overflow-y-auto">
+                <div className="absolute left-0 right-0 top-full mt-2 bg-white/80 backdrop-blur-2xl rounded-2xl shadow-[0_8px_30px_rgb(0,0,0,0.12)] border border-gray-100 z-50 overflow-hidden max-h-72 overflow-y-auto">
                   {suggestions.map((s) => (
                     <button
                       key={s.code}
                       onClick={() => handleSelectCollege(s.code, s.name)}
-                      className="w-full text-left px-3 py-2 hover:bg-zinc-900 flex items-center gap-3 border-b border-zinc-900 last:border-0"
+                      className="w-full text-left px-5 py-3.5 hover:bg-black/5 flex items-center gap-4 transition-colors border-b border-gray-100/50 last:border-0 cursor-pointer"
                     >
-                      <span className="font-mono text-[10px] text-zinc-500 shrink-0">
+                      <span className="font-semibold text-[13px] text-gray-500 shrink-0 bg-gray-100 px-2 py-1 rounded-md">
                         {s.code}
                       </span>
-                      <span className="text-sm text-zinc-300 truncate">
+                      <span className="text-[15px] text-[#1d1d1f] font-medium truncate">
                         {s.name}
                       </span>
                     </button>
@@ -293,107 +311,111 @@ export default function Home() {
               )}
             </div>
 
-            {/* Quota Selector */}
-            <div className="md:col-span-3">
-              <label className="block text-[10px] font-mono uppercase tracking-wider text-zinc-500 mb-2">
-                Exam Quota
-              </label>
-              <div className="flex border border-zinc-800 bg-black">
+            <div className="grid grid-cols-1 md:grid-cols-12 gap-5 items-end">
+              {/* Quota Selector (Segmented Control) */}
+              <div className="md:col-span-5">
+                <label className="block text-[12px] font-medium text-gray-500 mb-2 pl-1">
+                  Examination Quota
+                </label>
+                <div className="flex bg-[#f5f5f7] p-1 rounded-xl">
+                  <button
+                    type="button"
+                    onClick={() => handleQuotaChange('MH')}
+                    className={`flex-1 py-2 px-3 text-[14px] font-medium rounded-lg transition-all cursor-pointer ${
+                      selectedQuota === 'MH'
+                        ? 'bg-white text-[#1d1d1f] shadow-sm'
+                        : 'text-gray-500 hover:text-gray-700'
+                    }`}
+                  >
+                    MHT-CET
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => handleQuotaChange('AI')}
+                    className={`flex-1 py-2 px-3 text-[14px] font-medium rounded-lg transition-all cursor-pointer ${
+                      selectedQuota === 'AI'
+                        ? 'bg-white text-[#1d1d1f] shadow-sm'
+                        : 'text-gray-500 hover:text-gray-700'
+                    }`}
+                  >
+                    JEE Main
+                  </button>
+                </div>
+              </div>
+
+              {/* CAP Round Selector */}
+              <div className="md:col-span-4">
+                <label className="block text-[12px] font-medium text-gray-500 mb-2 pl-1">
+                  CAP Round
+                </label>
+                <div className="relative">
+                  <select
+                    value={selectedRound}
+                    onChange={(e) => handleRoundChange(Number(e.target.value))}
+                    className="w-full appearance-none bg-[#f5f5f7] text-[#1d1d1f] text-[15px] font-medium px-4 py-2.5 rounded-xl outline-none focus:ring-4 focus:ring-[#0071e3]/20 cursor-pointer pr-10"
+                  >
+                    <option value={1}>Round 1</option>
+                    <option value={2}>Round 2</option>
+                    <option value={3}>Round 3</option>
+                    <option value={4}>Round 4 (Spot)</option>
+                  </select>
+                  <div className="absolute right-3.5 top-1/2 -translate-y-1/2 pointer-events-none text-gray-400">
+                    <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                      <polyline points="6 9 12 15 18 9" />
+                    </svg>
+                  </div>
+                </div>
+              </div>
+
+              {/* Search Button */}
+              <div className="md:col-span-3">
                 <button
-                  type="button"
-                  onClick={() => handleQuotaChange('MH')}
-                  className={`flex-1 py-2 px-2 text-xs text-center font-mono transition-none ${
-                    selectedQuota === 'MH'
-                      ? 'bg-zinc-200 text-black font-semibold'
-                      : 'text-zinc-500 hover:bg-zinc-900 hover:text-zinc-300'
-                  }`}
+                  onClick={handleSearchClick}
+                  disabled={loading || (!activeCollegeCode && !searchInput.trim())}
+                  className="w-full bg-[#0071e3] text-white disabled:bg-[#0071e3]/50 font-medium text-[15px] py-2.5 px-4 rounded-xl hover:bg-[#0077ED] transition-colors shadow-sm disabled:shadow-none cursor-pointer"
                 >
-                  MH (CET)
-                </button>
-                <div className="w-[1px] bg-zinc-800" />
-                <button
-                  type="button"
-                  onClick={() => handleQuotaChange('AI')}
-                  className={`flex-1 py-2 px-2 text-xs text-center font-mono transition-none ${
-                    selectedQuota === 'AI'
-                      ? 'bg-zinc-200 text-black font-semibold'
-                      : 'text-zinc-500 hover:bg-zinc-900 hover:text-zinc-300'
-                  }`}
-                >
-                  AI (JEE)
+                  {loading ? 'Searching...' : 'Show Cutoffs'}
                 </button>
               </div>
             </div>
-
-            {/* CAP Round Selector */}
-            <div className="md:col-span-3">
-              <label className="block text-[10px] font-mono uppercase tracking-wider text-zinc-500 mb-2">
-                CAP Round
-              </label>
-              <select
-                value={selectedRound}
-                onChange={(e) => handleRoundChange(Number(e.target.value))}
-                className="w-full bg-black border border-zinc-800 text-zinc-200 text-sm px-3 py-2 outline-none focus:border-zinc-500 cursor-pointer font-mono"
-              >
-                <option value={1}>Round 1</option>
-                <option value={2}>Round 2</option>
-                <option value={3}>Round 3</option>
-                <option value={4}>Round 4</option>
-              </select>
+            
+            {/* Quick Picks */}
+            <div className="flex items-center gap-2 flex-wrap pt-2">
+              <span className="text-[12px] font-medium text-gray-400 mr-2">Suggested:</span>
+              {POPULAR_COLLEGES.map((col) => (
+                <button
+                  key={col.code}
+                  onClick={() => handleSelectCollege(col.code, col.name)}
+                  className={`text-[12px] px-3 py-1.5 rounded-full font-medium transition-colors cursor-pointer ${
+                    activeCollegeCode === col.code
+                      ? "bg-[#0071e3] text-white"
+                      : "bg-[#f5f5f7] text-gray-600 hover:bg-gray-200"
+                  }`}
+                >
+                  {col.name.split(',')[0]}
+                </button>
+              ))}
             </div>
-
-            {/* Search Button */}
-            <div className="md:col-span-2">
-              <button
-                onClick={handleSearchClick}
-                disabled={loading || (!activeCollegeCode && !searchInput.trim())}
-                className="w-full bg-white text-black disabled:bg-zinc-900 disabled:text-zinc-600 font-semibold text-sm py-2 px-4 border border-white disabled:border-zinc-900 hover:bg-zinc-200 transition-none"
-              >
-                {loading ? 'Fetching...' : 'Query Data'}
-              </button>
-            </div>
-          </div>
-          
-          {/* Quick Picks */}
-          <div className="flex items-center gap-2 flex-wrap mt-4">
-            <span className="text-[10px] font-mono uppercase text-zinc-600 mr-2">Top Institutions:</span>
-            {POPULAR_COLLEGES.map((col) => (
-              <button
-                key={col.code}
-                onClick={() => handleSelectCollege(col.code, col.name)}
-                className={`text-[10px] px-2 py-0.5 border font-mono transition-none ${
-                  activeCollegeCode === col.code
-                    ? "bg-zinc-800 border-zinc-700 text-white"
-                    : "bg-black border-zinc-900 text-zinc-500 hover:text-zinc-300 hover:border-zinc-700 hover:bg-zinc-950"
-                }`}
-              >
-                {col.code}
-              </button>
-            ))}
           </div>
         </div>
 
         {/* Results Area */}
-        {hasSearched ? (
-          <div className="flex flex-col gap-4">
+        {hasSearched && (
+          <div className="flex flex-col gap-6">
             {/* Active College Banner & Stats */}
             {activeCollegeCode && (
-              <div className="border border-zinc-900 bg-black p-4 flex flex-col md:flex-row md:items-center justify-between gap-4">
-                <div className="flex flex-col gap-2">
-                  <div className="flex items-center gap-2">
-                    <span className="font-mono text-[10px] px-1.5 py-0.5 border border-zinc-800 bg-zinc-950 text-zinc-400">
-                      ID: {activeCollegeCode}
-                    </span>
-                    <span className="font-mono text-[10px] px-1.5 py-0.5 border border-zinc-800 bg-zinc-950 text-zinc-400">
-                      QUOTA: {selectedQuota === 'AI' ? 'ALL INDIA' : 'STATE'}
-                    </span>
-                    <span className="font-mono text-[10px] px-1.5 py-0.5 border border-zinc-800 bg-zinc-950 text-zinc-400">
-                      R{selectedRound}
-                    </span>
-                  </div>
-                  <h2 className="text-xl font-medium text-white truncate tracking-tight">
-                    {activeCollegeName || (collegeDictionary as Record<string, string>)[activeCollegeCode] || `Unknown Code: ${activeCollegeCode}`}
+              <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 px-2">
+                <div className="flex flex-col gap-1">
+                  <h2 className="text-2xl sm:text-3xl font-semibold text-[#1d1d1f] tracking-tight">
+                    {activeCollegeName || (collegeDictionary as Record<string, string>)[activeCollegeCode] || `Institute ${activeCollegeCode}`}
                   </h2>
+                  <div className="flex items-center gap-2 text-[13px] font-medium text-gray-500">
+                    <span>Code: {activeCollegeCode}</span>
+                    <span>•</span>
+                    <span>{selectedQuota === 'AI' ? 'All India (JEE)' : 'Maharashtra State (CET)'}</span>
+                    <span>•</span>
+                    <span>Round {selectedRound}</span>
+                  </div>
                 </div>
 
                 {/* Filters */}
@@ -404,12 +426,12 @@ export default function Home() {
                       value={branchFilter}
                       onChange={(e) => setBranchFilter(e.target.value)}
                       placeholder="Filter branch..."
-                      className="bg-black border border-zinc-800 text-xs text-zinc-200 px-3 py-1.5 outline-none focus:border-zinc-500 w-32 font-mono"
+                      className="bg-white text-[13px] text-[#1d1d1f] px-3 py-2 rounded-lg outline-none focus:ring-2 focus:ring-[#0071e3]/20 shadow-sm border border-gray-100 w-32 transition-all"
                     />
                     <select
                       value={selectedCategory}
                       onChange={(e) => setSelectedCategory(e.target.value)}
-                      className="bg-black border border-zinc-800 text-xs text-zinc-200 px-3 py-1.5 outline-none cursor-pointer font-mono"
+                      className="bg-white text-[13px] text-[#1d1d1f] px-3 py-2 rounded-lg outline-none cursor-pointer shadow-sm border border-gray-100 transition-all"
                     >
                       <option value="All">All Categories</option>
                       {availableCategories.map((cat) => (
@@ -419,111 +441,110 @@ export default function Home() {
                     <select
                       value={sortBy}
                       onChange={(e) => setSortBy(e.target.value as SortOption)}
-                      className="bg-black border border-zinc-800 text-xs text-zinc-200 px-3 py-1.5 outline-none cursor-pointer font-mono"
+                      className="bg-white text-[13px] text-[#1d1d1f] px-3 py-2 rounded-lg outline-none cursor-pointer shadow-sm border border-gray-100 transition-all"
                     >
-                      <option value="percentile-desc">Sort: Highest %</option>
-                      <option value="percentile-asc">Sort: Lowest %</option>
-                      <option value="branch-asc">Sort: Branch A-Z</option>
+                      <option value="percentile-desc">Highest Cutoff</option>
+                      <option value="percentile-asc">Lowest Cutoff</option>
+                      <option value="branch-asc">Branch A-Z</option>
                     </select>
                   </div>
                 )}
               </div>
             )}
 
-            {/* Results Table/Grid */}
+            {/* Results Cards Grid (Apple Style Cards) */}
             {loading ? (
-              <div className="border border-zinc-900 bg-black p-12 text-center flex flex-col items-center justify-center gap-3 text-zinc-500">
-                <span className="font-mono text-sm animate-pulse">Querying Database...</span>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+                {[1, 2, 3, 4].map((idx) => (
+                  <div key={idx} className="bg-white rounded-[24px] p-6 shadow-sm border border-gray-100/50 animate-pulse h-40" />
+                ))}
               </div>
             ) : processedResults.length > 0 ? (
-              <div className="flex flex-col border border-zinc-900 bg-black">
-                {/* Table Header */}
-                <div className="grid grid-cols-12 gap-4 border-b border-zinc-900 px-4 py-3 bg-zinc-950/50 text-[10px] font-mono tracking-widest text-zinc-500 uppercase">
-                  <div className="col-span-2">Choice Code</div>
-                  <div className="col-span-5">Branch Name</div>
-                  <div className="col-span-2">Category</div>
-                  <div className="col-span-3 text-right">Closing %ile</div>
-                </div>
-                {/* Table Rows */}
-                <div className="divide-y divide-zinc-900">
-                  {processedResults.map((row, index) => {
-                    const branchName = (branchDictionary as Record<string, string>)[row.branch_code] || row.branch_code;
-                    return (
-                      <div
-                        key={row.id || index}
-                        className="grid grid-cols-12 gap-4 px-4 py-3 hover:bg-zinc-900/50 items-center text-sm transition-colors"
-                      >
-                        <div className="col-span-2 font-mono text-[11px] text-zinc-400 flex items-center gap-2">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+                {processedResults.map((row, index) => {
+                  const branchName = (branchDictionary as Record<string, string>)[row.branch_code] || row.branch_code;
+                  const isAI = row.seat_type === 'AI';
+
+                  return (
+                    <div
+                      key={row.id || index}
+                      className="bg-white rounded-[24px] p-6 shadow-[0_2px_12px_rgb(0,0,0,0.03)] border border-gray-100 hover:shadow-[0_8px_24px_rgb(0,0,0,0.06)] transition-all flex flex-col justify-between gap-6 group"
+                    >
+                      <div>
+                        <div className="flex items-start justify-between gap-3 mb-1">
+                          <h3 className="font-semibold text-[17px] text-[#1d1d1f] leading-tight group-hover:text-[#0071e3] transition-colors">
+                            {branchName}
+                          </h3>
+                          <span className="shrink-0 text-[11px] font-semibold px-2.5 py-1 rounded-full bg-[#f5f5f7] text-gray-500 uppercase tracking-wider">
+                            {isAI ? 'JEE' : row.seat_type}
+                          </span>
+                        </div>
+                        
+                        <div className="flex items-center gap-2 mt-2">
                           <button
                             onClick={() => copyToClipboard(row.branch_code)}
-                            className="hover:text-white border-b border-transparent hover:border-white transition-colors cursor-pointer"
-                            title="Copy Code"
+                            className="inline-flex items-center gap-1 text-[13px] font-medium text-gray-500 hover:text-[#0071e3] transition-colors bg-gray-50 hover:bg-[#0071e3]/10 px-2 py-1 rounded-md cursor-pointer"
+                            title="Copy Choice Code"
                           >
-                            {row.branch_code}
+                            <span>Code {row.branch_code}</span>
+                            {copiedCode === row.branch_code ? (
+                              <svg className="w-3.5 h-3.5 text-green-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                                <polyline points="20 6 9 17 4 12" />
+                              </svg>
+                            ) : (
+                              <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                                <rect x="9" y="9" width="13" height="13" rx="2" ry="2" />
+                                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" />
+                              </svg>
+                            )}
                           </button>
-                          {copiedCode === row.branch_code && <span className="text-[9px] text-zinc-600 uppercase">Copied</span>}
                         </div>
-                        <div className="col-span-5 text-zinc-200 truncate pr-4 text-[13px]" title={branchName}>
-                          {branchName}
+                      </div>
+
+                      <div className="pt-4 border-t border-gray-100 flex items-end justify-between">
+                        <div className="text-[13px] font-medium text-gray-500">
+                          {isAI ? 'JEE Percentile' : 'CET Percentile'}
                         </div>
-                        <div className="col-span-2 font-mono text-[11px] text-zinc-400">
-                          {row.seat_type === 'AI' ? 'AI (JEE)' : row.seat_type}
-                        </div>
-                        <div className="col-span-3 text-right font-mono text-sm text-white font-medium">
+                        <div className="text-3xl font-semibold tracking-tight text-[#1d1d1f]">
                           {row.closing_percentile.toFixed(4)}
                         </div>
                       </div>
-                    );
-                  })}
-                </div>
+                    </div>
+                  );
+                })}
               </div>
             ) : (
-              <div className="border border-zinc-900 bg-black p-12 text-center flex flex-col items-center gap-4">
-                <span className="text-sm font-mono text-zinc-500">No cutoff records found.</span>
-                <div className="flex gap-2">
-                  {selectedCategory !== 'All' && (
-                    <button onClick={() => setSelectedCategory('All')} className="text-xs font-mono px-3 py-1.5 border border-zinc-800 hover:bg-zinc-900 text-zinc-300 cursor-pointer">
-                      Clear Category Filter
+              <div className="bg-white rounded-[32px] p-12 text-center shadow-[0_2px_12px_rgb(0,0,0,0.03)] border border-gray-100 flex flex-col items-center justify-center min-h-[300px]">
+                <div className="w-16 h-16 bg-[#f5f5f7] rounded-full flex items-center justify-center mb-4">
+                  <svg className="w-8 h-8 text-gray-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+                    <circle cx="11" cy="11" r="8" />
+                    <line x1="21" y1="21" x2="16.65" y2="16.65" />
+                  </svg>
+                </div>
+                <h3 className="text-[20px] font-semibold text-[#1d1d1f] mb-2">No Cutoffs Found</h3>
+                <p className="text-[15px] text-gray-500 max-w-sm mb-6">
+                  We couldn't find any results matching your current filters. Try adjusting your search criteria.
+                </p>
+                <div className="flex gap-3">
+                  {(selectedCategory !== 'All' || branchFilter) && (
+                    <button
+                      onClick={() => { setSelectedCategory('All'); setBranchFilter(''); }}
+                      className="px-4 py-2 bg-gray-100 hover:bg-gray-200 text-[#1d1d1f] text-[14px] font-medium rounded-full transition-colors cursor-pointer"
+                    >
+                      Clear Filters
                     </button>
                   )}
-                  {branchFilter && (
-                    <button onClick={() => setBranchFilter('')} className="text-xs font-mono px-3 py-1.5 border border-zinc-800 hover:bg-zinc-900 text-zinc-300 cursor-pointer">
-                      Clear Branch Filter
-                    </button>
-                  )}
-                  <button onClick={() => handleQuotaChange(selectedQuota === 'AI' ? 'MH' : 'AI')} className="text-xs font-mono px-3 py-1.5 border border-zinc-800 hover:bg-zinc-900 text-zinc-300 cursor-pointer">
-                    Switch to {selectedQuota === 'AI' ? 'MH' : 'AI'}
-                  </button>
                 </div>
               </div>
             )}
             
             {processedResults.length > 0 && (
-              <div className="flex items-center justify-between mt-2">
-                <div className="text-[10px] font-mono text-zinc-600">
-                  Total Entries: <span className="text-zinc-400">{processedResults.length}</span>
-                </div>
-                <div className="text-[10px] font-mono text-zinc-600">
-                  Data sourced from State CET Cell, Maharashtra
-                </div>
+              <div className="text-center mt-4">
+                <span className="text-[13px] font-medium text-gray-400">
+                  Showing {processedResults.length} {processedResults.length === 1 ? 'result' : 'results'}
+                </span>
               </div>
             )}
-          </div>
-        ) : (
-          /* Empty State / Initial View */
-          <div className="border border-zinc-900 bg-black p-8 sm:p-12 text-center flex flex-col items-center justify-center min-h-[40vh]">
-            <div className="w-8 h-8 border border-zinc-800 flex items-center justify-center mb-4">
-              <span className="w-2 h-2 bg-zinc-700" />
-            </div>
-            <h2 className="text-lg font-medium text-white mb-2">System Ready</h2>
-            <p className="text-sm text-zinc-500 max-w-md mx-auto mb-6">
-              Enter an institute name or DTE code to query historical cutoff data across State (MHT-CET) and All India (JEE) quotas.
-            </p>
-            <div className="flex gap-4 text-[10px] font-mono text-zinc-600 uppercase">
-              <span>Records: 4 Rounds</span>
-              <span>•</span>
-              <span>Year: 2025-26</span>
-            </div>
           </div>
         )}
       </main>
